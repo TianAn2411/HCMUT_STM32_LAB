@@ -45,13 +45,13 @@ main/
 ### Bài tập
 Lab này bao gồm 10 bài tập liên quan đến lập trình vi điều khiển với STM32 sử dụng STM32CubeIDE và mô phỏng trên Proteus. Dưới đây là tóm tắt các bài tập:
 
-1. **Bài tập 1**: Nhấp nháy LED trên STM32F103C6 bằng STM32CubeIDE và Proteus.
-2. **Bài tập 2**: Mở rộng Bài tập 1 để mô phỏng đèn giao thông với ba LED.
-3. **Bài tập 3**: Tạo mô phỏng đèn giao thông 4 chiều với 12 LED.
-4. **Bài tập 4**: Thêm màn hình 7-segment vào thiết kế đèn giao thông.
-5. **Bài tập 5**: Tích hợp màn hình 7-segment để hiển thị giá trị đếm ngược.
-6. **Bài tập 6**: Thiết kế mô phỏng đồng hồ analog với 12 LED.
-7. **Bài tập 7 đến 10**: Các hàm quản lý LED đồng hồ và triển khai đồng hồ analog sử dụng 12 LED.
+- **Bài tập 1**: Nhấp nháy LED trên STM32F103C6 bằng STM32CubeIDE và Proteus.
+- **Bài tập 2**: Mở rộng Bài tập 1 để mô phỏng đèn giao thông với ba LED.
+- **Bài tập 3**: Tạo mô phỏng đèn giao thông 4 chiều với 12 LED.
+- **Bài tập 4**: Thêm màn hình 7-segment vào thiết kế đèn giao thông.
+- **Bài tập 5**: Tích hợp màn hình 7-segment để hiển thị giá trị đếm ngược.
+- **Bài tập 6**: Thiết kế mô phỏng đồng hồ analog với 12 LED.
+- **Bài tập 7 đến 10**: Các hàm quản lý LED đồng hồ và triển khai đồng hồ analog sử dụng 12 LED.
 
 Để biết chi tiết về từng bài tập, vui lòng tham khảo tài liệu lab.
 
