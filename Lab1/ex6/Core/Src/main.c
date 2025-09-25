@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SPEED 10 //Decrease the number for faster clock (1s), set 100 -> 1min = 6s
+#define SPEED 100 //Decrease the number for faster clock (1s), set 100 -> 1min = 6s
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -43,24 +43,17 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-int state = 0x0;
-int hour = 0;
-int min = 0;
-int sec = 0;
-int curr_state[3] = {0, 0, 0};
-int prev_state[3] = {0, 0, 0};
+int state = 0xFFF;
+int counter = 0;
+int flag = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-void clearAllClock();
-void setNumberOnClock(int num);
 void stateUpdate();
-void clockUpdate();
-void writeClock();
-void clearNumberOnClock(int num);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -97,14 +90,24 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  clearAllClock();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  writeClock();
+	  if (counter >= 12){
+		  counter = 0;
+		  flag ^= 1; //toggle flag
+	  }
+	  if (flag == 0){
+		  state = state | (1 << counter);
+	  }else if (flag == 1){
+		  state = state & ~(1 << counter);
+	  }
+	  stateUpdate();
+	  counter++;
 	  HAL_Delay(SPEED);
     /* USER CODE END WHILE */
 
@@ -193,59 +196,7 @@ void stateUpdate(){
 	HAL_GPIO_WritePin(LED_10_GPIO_Port, LED_10_Pin, !(~state & (1 << 10)));
 	HAL_GPIO_WritePin(LED_11_GPIO_Port, LED_11_Pin, !(~state & (1 << 11)));
 }
-void clearAllClock(){
-	state = 0xFFF;
-	stateUpdate();
-}
-void setNumberOnClock(int num){
-	state &= ~(1 << num);
-	stateUpdate();
-}
-void clearNumberOnClock(int num){
-	state |= (1 << num);
-	stateUpdate();
-}
-void clockUpdate(){
-	curr_state[0] = sec/5;
-	curr_state[1] = min/5;
-	curr_state[2] = hour;
-	for (int i = 0; i < 3; i++){
-		setNumberOnClock(curr_state[i]);
-	}
-	for (int i = 0; i < 3; i++){
-		int flag = 1;
-		for (int j = 0; j < 3; j++){
-			if (curr_state[j] == prev_state[i]){
-				flag = 0;
-				break;
-			}
-		}
-		if (flag == 1){
-			clearNumberOnClock(prev_state[i]);
-		}
-		prev_state[i] = curr_state[i];
-	}
-}
-void writeClock(){
-	clockUpdate();
-	sec++;
-	if (sec >= 60){
-		sec = 0;
-	}
-	if (sec == 0){
-		min++;
-		if (min >= 60){
-			min = 0;
-		}
-		if (min == 0){
-			hour++;
-			if (hour >= 12){
-				hour = 0;
-			}
-		}
-	}
 
-}
 /* USER CODE END 4 */
 
 /**

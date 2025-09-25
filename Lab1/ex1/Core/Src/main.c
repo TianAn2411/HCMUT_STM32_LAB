@@ -32,8 +32,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ON 1
-#define OFF 0
+#define ON 0
+#define OFF 1
 #define INIT 0
 #define RED 1
 #define YELLOW 2
@@ -100,36 +100,37 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if (counter > 0){
+		  counter--;
+	  }
+	  HAL_Delay(10);
 	  switch (state){
 	  case INIT:
 		  red_led(OFF);
 		  yellow_led(OFF);
 		  counter = 200;
 		  state = RED;
+		  red_led(ON);
 		  break;
 	  case RED:
-		  red_led(ON);
-		  counter--;
 		  if (counter <= 0){
 			  red_led (OFF);
 			  counter = 200;
 			  state = YELLOW;
+			  yellow_led(ON);
 		  }
 		  break;
 	  case YELLOW:
-		  yellow_led(ON);
-		  counter--;
 		  if (counter <= 0){
 			  yellow_led(OFF);
 			  counter = 200;
 			  state = RED;
+			  red_led(ON);
 		  }
 		  break;
 	  default:
 		  break;
 	  }
-
-	  HAL_Delay(10);
 
     /* USER CODE END WHILE */
 
