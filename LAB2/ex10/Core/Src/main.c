@@ -56,16 +56,36 @@ uint8_t led7seg_num_display[] = {
 		/*9*/ 0x10/*0b0010000*/
 };
 
+//uint8_t matrix_buffer[8] = {
+//   /*11000011*/ 0xC3, // ~0x3C /*11000001*/
+//   /*10111101*/ 0xBD, // ~0x42 /*10110111*/
+//   /*01111110*/ 0x7E, // ~0x81 /*01110111*/
+//   /*01111110*/ 0x7E, // ~0x81 /*01110111*/
+//   /*00000000*/ 0x00, // ~0xFF /*01110111*/
+//   /*01111110*/ 0x7E, // ~0x81 /*01110111*/
+//   /*01111110*/ 0x7E, // ~0x81 /*10110111*/
+//   /*11111111*/ 0xFF  // ~0x00 /*11000001*/
+//};
 uint8_t matrix_buffer[8] = {
-   /*11000011*/ 0xC3, // ~0x3C
-   /*10111101*/ 0xBD, // ~0x42
-   /*01111110*/ 0x7E, // ~0x81
-   /*01111110*/ 0x7E, // ~0x81
-   /*00000000*/ 0x00, // ~0xFF
-   /*01111110*/ 0x7E, // ~0x81
-   /*01111110*/ 0x7E, // ~0x81
-   /*11111111*/ 0xFF  // ~0x00
+		0xC1,
+		0xB7,
+		0x77,
+		0x77,
+		0x77,
+		0x77,
+		0xB7,
+		0xC1
 };
+//uint8_t matrix_buffer[8] = {
+//  0x00, //00000000
+//  0x00, //01111100
+//  0x7C, //00010010
+//  0x12, //00010001
+//  0x11, //00010010
+//  0x12, //01111100
+//  0x7C, //00000000
+//  0x00  //00000000
+//};
 int led_index = 0;
 const int MAX_LED = 4;
 int led_buffer[4] = {0};
@@ -130,8 +150,8 @@ int main(void)
   setTimer(0, 100); //LED_RED
   setTimer(1, 50); //7_SEG
   setTimer(2, 100); //2 LED
-  setTimer(3, 2);
-  setTimer(4, 2);
+  setTimer(3, 25);
+//  setTimer(4, 25);
   int hour = 15, minute = 8, second = 50;
   while (1)
   {
@@ -161,11 +181,11 @@ int main(void)
 		  updateClockBuffer(hour, minute);
 	  }
 	  if (isExpired(3) == 1){
-		  setTimer(3, 2);
+		  setTimer(3, 5);
 		  led_matrix_index = (led_matrix_index + 1) %8;
 	  }
 	  if (isExpired(4) == 1){
-		  setTimer(4,5);
+		  setTimer(4,50);
 		  shiftMatrixLeft();
 	  }
 	  updateLEDMatrix(led_matrix_index);
