@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00015572  00000000  00000000  00024610  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00004591  00000000  00000000  00039b82  2**0
+ 17 .debug_line   00004597  00000000  00000000  00039b82  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00079888  00000000  00000000  0003e113  2**0
+ 18 .debug_str    00079888  00000000  00000000  0003e119  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000b799b  2**0
+ 19 .comment      00000053  00000000  00000000  000b79a1  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00000d74  00000000  00000000  000b79f0  2**2
+ 20 .debug_frame  00000d74  00000000  00000000  000b79f4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -111,114 +111,113 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  switch (state){
+	  if (counter > 0){
  800015c:	4b27      	ldr	r3, [pc, #156]	; (80001fc <main+0xb0>)
  800015e:	781b      	ldrb	r3, [r3, #0]
- 8000160:	2b02      	cmp	r3, #2
- 8000162:	d02a      	beq.n	80001ba <main+0x6e>
- 8000164:	2b02      	cmp	r3, #2
- 8000166:	dc3f      	bgt.n	80001e8 <main+0x9c>
- 8000168:	2b00      	cmp	r3, #0
- 800016a:	d002      	beq.n	8000172 <main+0x26>
- 800016c:	2b01      	cmp	r3, #1
- 800016e:	d00d      	beq.n	800018c <main+0x40>
-			  counter = 200;
+ 8000160:	2b00      	cmp	r3, #0
+ 8000162:	d005      	beq.n	8000170 <main+0x24>
+		  counter--;
+ 8000164:	4b25      	ldr	r3, [pc, #148]	; (80001fc <main+0xb0>)
+ 8000166:	781b      	ldrb	r3, [r3, #0]
+ 8000168:	3b01      	subs	r3, #1
+ 800016a:	b2da      	uxtb	r2, r3
+ 800016c:	4b23      	ldr	r3, [pc, #140]	; (80001fc <main+0xb0>)
+ 800016e:	701a      	strb	r2, [r3, #0]
+	  }
+	  HAL_Delay(10);
+ 8000170:	200a      	movs	r0, #10
+ 8000172:	f000 f9c7 	bl	8000504 <HAL_Delay>
+	  switch (state){
+ 8000176:	4b22      	ldr	r3, [pc, #136]	; (8000200 <main+0xb4>)
+ 8000178:	781b      	ldrb	r3, [r3, #0]
+ 800017a:	2b02      	cmp	r3, #2
+ 800017c:	d027      	beq.n	80001ce <main+0x82>
+ 800017e:	2b02      	cmp	r3, #2
+ 8000180:	dc36      	bgt.n	80001f0 <main+0xa4>
+ 8000182:	2b00      	cmp	r3, #0
+ 8000184:	d002      	beq.n	800018c <main+0x40>
+ 8000186:	2b01      	cmp	r3, #1
+ 8000188:	d010      	beq.n	80001ac <main+0x60>
 			  state = RED;
+			  red_led(ON);
 		  }
 		  break;
 	  default:
 		  break;
- 8000170:	e03a      	b.n	80001e8 <main+0x9c>
+ 800018a:	e031      	b.n	80001f0 <main+0xa4>
 		  red_led(OFF);
- 8000172:	2000      	movs	r0, #0
- 8000174:	f000 f8b4 	bl	80002e0 <red_led>
-		  yellow_led(OFF);
- 8000178:	2000      	movs	r0, #0
- 800017a:	f000 f8c3 	bl	8000304 <yellow_led>
-		  counter = 200;
- 800017e:	4b20      	ldr	r3, [pc, #128]	; (8000200 <main+0xb4>)
- 8000180:	22c8      	movs	r2, #200	; 0xc8
- 8000182:	701a      	strb	r2, [r3, #0]
-		  state = RED;
- 8000184:	4b1d      	ldr	r3, [pc, #116]	; (80001fc <main+0xb0>)
- 8000186:	2201      	movs	r2, #1
- 8000188:	701a      	strb	r2, [r3, #0]
-		  break;
- 800018a:	e032      	b.n	80001f2 <main+0xa6>
-		  red_led(ON);
  800018c:	2001      	movs	r0, #1
  800018e:	f000 f8a7 	bl	80002e0 <red_led>
-		  counter--;
- 8000192:	4b1b      	ldr	r3, [pc, #108]	; (8000200 <main+0xb4>)
- 8000194:	781b      	ldrb	r3, [r3, #0]
- 8000196:	3b01      	subs	r3, #1
- 8000198:	b2da      	uxtb	r2, r3
- 800019a:	4b19      	ldr	r3, [pc, #100]	; (8000200 <main+0xb4>)
+		  yellow_led(OFF);
+ 8000192:	2001      	movs	r0, #1
+ 8000194:	f000 f8b6 	bl	8000304 <yellow_led>
+		  counter = 200;
+ 8000198:	4b18      	ldr	r3, [pc, #96]	; (80001fc <main+0xb0>)
+ 800019a:	22c8      	movs	r2, #200	; 0xc8
  800019c:	701a      	strb	r2, [r3, #0]
-		  if (counter <= 0){
+		  state = RED;
  800019e:	4b18      	ldr	r3, [pc, #96]	; (8000200 <main+0xb4>)
- 80001a0:	781b      	ldrb	r3, [r3, #0]
- 80001a2:	2b00      	cmp	r3, #0
- 80001a4:	d122      	bne.n	80001ec <main+0xa0>
-			  red_led (OFF);
- 80001a6:	2000      	movs	r0, #0
- 80001a8:	f000 f89a 	bl	80002e0 <red_led>
-			  counter = 200;
- 80001ac:	4b14      	ldr	r3, [pc, #80]	; (8000200 <main+0xb4>)
- 80001ae:	22c8      	movs	r2, #200	; 0xc8
- 80001b0:	701a      	strb	r2, [r3, #0]
-			  state = YELLOW;
- 80001b2:	4b12      	ldr	r3, [pc, #72]	; (80001fc <main+0xb0>)
- 80001b4:	2202      	movs	r2, #2
- 80001b6:	701a      	strb	r2, [r3, #0]
+ 80001a0:	2201      	movs	r2, #1
+ 80001a2:	701a      	strb	r2, [r3, #0]
+		  red_led(ON);
+ 80001a4:	2000      	movs	r0, #0
+ 80001a6:	f000 f89b 	bl	80002e0 <red_led>
 		  break;
- 80001b8:	e018      	b.n	80001ec <main+0xa0>
-		  yellow_led(ON);
- 80001ba:	2001      	movs	r0, #1
- 80001bc:	f000 f8a2 	bl	8000304 <yellow_led>
-		  counter--;
- 80001c0:	4b0f      	ldr	r3, [pc, #60]	; (8000200 <main+0xb4>)
- 80001c2:	781b      	ldrb	r3, [r3, #0]
- 80001c4:	3b01      	subs	r3, #1
- 80001c6:	b2da      	uxtb	r2, r3
- 80001c8:	4b0d      	ldr	r3, [pc, #52]	; (8000200 <main+0xb4>)
- 80001ca:	701a      	strb	r2, [r3, #0]
+ 80001aa:	e026      	b.n	80001fa <main+0xae>
 		  if (counter <= 0){
- 80001cc:	4b0c      	ldr	r3, [pc, #48]	; (8000200 <main+0xb4>)
- 80001ce:	781b      	ldrb	r3, [r3, #0]
- 80001d0:	2b00      	cmp	r3, #0
- 80001d2:	d10d      	bne.n	80001f0 <main+0xa4>
-			  yellow_led(OFF);
- 80001d4:	2000      	movs	r0, #0
- 80001d6:	f000 f895 	bl	8000304 <yellow_led>
+ 80001ac:	4b13      	ldr	r3, [pc, #76]	; (80001fc <main+0xb0>)
+ 80001ae:	781b      	ldrb	r3, [r3, #0]
+ 80001b0:	2b00      	cmp	r3, #0
+ 80001b2:	d11f      	bne.n	80001f4 <main+0xa8>
+			  red_led (OFF);
+ 80001b4:	2001      	movs	r0, #1
+ 80001b6:	f000 f893 	bl	80002e0 <red_led>
 			  counter = 200;
- 80001da:	4b09      	ldr	r3, [pc, #36]	; (8000200 <main+0xb4>)
- 80001dc:	22c8      	movs	r2, #200	; 0xc8
- 80001de:	701a      	strb	r2, [r3, #0]
+ 80001ba:	4b10      	ldr	r3, [pc, #64]	; (80001fc <main+0xb0>)
+ 80001bc:	22c8      	movs	r2, #200	; 0xc8
+ 80001be:	701a      	strb	r2, [r3, #0]
+			  state = YELLOW;
+ 80001c0:	4b0f      	ldr	r3, [pc, #60]	; (8000200 <main+0xb4>)
+ 80001c2:	2202      	movs	r2, #2
+ 80001c4:	701a      	strb	r2, [r3, #0]
+			  yellow_led(ON);
+ 80001c6:	2000      	movs	r0, #0
+ 80001c8:	f000 f89c 	bl	8000304 <yellow_led>
+		  break;
+ 80001cc:	e012      	b.n	80001f4 <main+0xa8>
+		  if (counter <= 0){
+ 80001ce:	4b0b      	ldr	r3, [pc, #44]	; (80001fc <main+0xb0>)
+ 80001d0:	781b      	ldrb	r3, [r3, #0]
+ 80001d2:	2b00      	cmp	r3, #0
+ 80001d4:	d110      	bne.n	80001f8 <main+0xac>
+			  yellow_led(OFF);
+ 80001d6:	2001      	movs	r0, #1
+ 80001d8:	f000 f894 	bl	8000304 <yellow_led>
+			  counter = 200;
+ 80001dc:	4b07      	ldr	r3, [pc, #28]	; (80001fc <main+0xb0>)
+ 80001de:	22c8      	movs	r2, #200	; 0xc8
+ 80001e0:	701a      	strb	r2, [r3, #0]
 			  state = RED;
- 80001e0:	4b06      	ldr	r3, [pc, #24]	; (80001fc <main+0xb0>)
- 80001e2:	2201      	movs	r2, #1
- 80001e4:	701a      	strb	r2, [r3, #0]
+ 80001e2:	4b07      	ldr	r3, [pc, #28]	; (8000200 <main+0xb4>)
+ 80001e4:	2201      	movs	r2, #1
+ 80001e6:	701a      	strb	r2, [r3, #0]
+			  red_led(ON);
+ 80001e8:	2000      	movs	r0, #0
+ 80001ea:	f000 f879 	bl	80002e0 <red_led>
 		  break;
- 80001e6:	e003      	b.n	80001f0 <main+0xa4>
-		  break;
- 80001e8:	bf00      	nop
- 80001ea:	e002      	b.n	80001f2 <main+0xa6>
-		  break;
- 80001ec:	bf00      	nop
- 80001ee:	e000      	b.n	80001f2 <main+0xa6>
+ 80001ee:	e003      	b.n	80001f8 <main+0xac>
 		  break;
  80001f0:	bf00      	nop
-	  }
-
-	  HAL_Delay(10);
- 80001f2:	200a      	movs	r0, #10
- 80001f4:	f000 f986 	bl	8000504 <HAL_Delay>
-	  switch (state){
- 80001f8:	e7b0      	b.n	800015c <main+0x10>
- 80001fa:	bf00      	nop
- 80001fc:	20000028 	.word	0x20000028
- 8000200:	20000029 	.word	0x20000029
+ 80001f2:	e7b3      	b.n	800015c <main+0x10>
+		  break;
+ 80001f4:	bf00      	nop
+ 80001f6:	e7b1      	b.n	800015c <main+0x10>
+		  break;
+ 80001f8:	bf00      	nop
+	  if (counter > 0){
+ 80001fa:	e7af      	b.n	800015c <main+0x10>
+ 80001fc:	20000029 	.word	0x20000029
+ 8000200:	20000028 	.word	0x20000028
 
 08000204 <SystemClock_Config>:
 /**
