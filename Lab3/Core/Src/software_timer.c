@@ -1,12 +1,11 @@
 /*
  * software_timer.c
  *
- *  Created on: Oct 8, 2025
- *      Author: Truong Thien An
+ *  Created on: Nov 5, 2025
+ *      Author: Admin
  */
 
-
-#include "software_timer.h"
+#include "global.h"
 int timer_flag[MAX_TIMER];
 int timer_counter[MAX_TIMER];
 
