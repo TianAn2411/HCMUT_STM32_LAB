@@ -101,7 +101,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   SCH_Add_Task(timeCounter, 0, 1);
   SCH_Add_Task(getKeyInput, 0, 1);
-  SCH_Add_Task(blinkLED, 0 ,50);
+  SCH_Add_Task(blinkLED, 0 ,25);
   SCH_Add_Task(fsm_run, 0, 1);
 
   while (1)
