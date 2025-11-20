@@ -32,13 +32,14 @@ void fsm_run(){
 			if(isButtonPressed(0)){
 				mode = MANUAL_STATE;
 				manual_blink_mode = BLINK_RED_GREEN;
-				updateLEDBuffer(2, 2);
+				t_blink = 500;
 //				setTimer(2, 25);
 				t_scan_led = 25;
 //				setTimer(5, 50);
-				t_blink = 50;
+				t_blink = 5;
 				clear7SEG();
 				clearLED();
+				updateLEDBuffer(2, 2);
 				break;
 			}
 			break;
@@ -48,9 +49,11 @@ void fsm_run(){
 					if (manual_blink_mode != BLINK_RED_GREEN){
 						manual_blink_mode = BLINK_RED_GREEN;
 					}
+//					displayBlinkTrafficLight(manual_blink_mode);
 					if(isButtonPressed(1)){
 						manual_blink_mode = BLINK_RED_YELLOW;
-						updateLEDBuffer(2,2);
+						updateLEDBuffer(1,1);
+						t_blink = 300;
 						break;
 					}
 					if(t_scan_led == 0){
@@ -62,16 +65,13 @@ void fsm_run(){
 					}
 					break;
 				case BLINK_RED_YELLOW:
-					if (manual_blink_mode != BLINK_RED_YELLOW){
-						manual_blink_mode = BLINK_RED_YELLOW;
+					if(t_blink <= 0){
+						manual_blink_mode = BLINK_GREEN_RED;
+						t_blink  = 500;
+						updateLEDBuffer(1,2);
+						break;
 					}
-					if(t_blink == 0){
-						if(manual_blink_mode != BLINK_GREEN_RED){
-							manual_blink_mode = BLINK_GREEN_RED;
-							break;
-						}
-						updateLEDBuffer(2,2);
-					}
+//					displayBlinkTrafficLight(manual_blink_mode);
 					if(t_scan_led == 0){
 						t_scan_led = 10;
 						update7SEG(led_index++);
@@ -84,11 +84,12 @@ void fsm_run(){
 					if (manual_blink_mode != BLINK_GREEN_RED){
 						manual_blink_mode = BLINK_GREEN_RED;
 					}
+//					displayBlinkTrafficLight(manual_blink_mode);
 					if(isButtonPressed(1)){
-						if(manual_blink_mode != BLINK_RED_GREEN){
-							manual_blink_mode = BLINK_RED_GREEN;
-						}
-						updateLEDBuffer(2,2);
+						manual_blink_mode = BLINK_YELLOW_RED;
+						t_blink = 300;
+						updateLEDBuffer(1,3);
+
 						break;
 					}
 					if(t_scan_led == 0){
@@ -99,8 +100,27 @@ void fsm_run(){
 						}
 					}
 					break;
+				case BLINK_YELLOW_RED:
+					if(t_blink <= 0){
+						manual_blink_mode = BLINK_RED_GREEN;
+						t_blink  = 500;
+						updateLEDBuffer(1,2);
+						break;
+					}
+//					displayBlinkTrafficLight(manual_blink_mode);
+					if(t_scan_led == 0){
+						t_scan_led = 10;
+						update7SEG(led_index++);
+						if (led_index > 3){
+							led_index = 0;
+						}
+					}
+					break;
+				default:
+					break;
 
 			}
+			displayBlinkTrafficLight(manual_blink_mode);
 			if (isButtonPressed(0)){
 				mode = CONFIG_STATE;
 				config_mode = CONFIG_RED;
@@ -115,7 +135,7 @@ void fsm_run(){
 				updateLEDBuffer(2, 3);
 				break;
 			}
-			displayBlinkTrafficLight(manual_blink_mode);
+
 
 			if(t_scan_led == 0){
 				t_scan_led = 10;

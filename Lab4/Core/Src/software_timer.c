@@ -40,15 +40,15 @@ void timeCounter(){
 		t_road1--;
 	}
 	if (t_road2 > 0){
-			t_road2--;
-		}
+		t_road2--;
+	}
 	if (t_scan_led > 0){
-			t_scan_led--;
-		}
+		t_scan_led--;
+	}
 	if (t_1s > 0){
-			t_1s--;
-		}
+		t_1s--;
+	}
 	if (t_blink > 0){
-			t_blink--;
-		}
+		t_blink--;
+	}
 }

@@ -69,6 +69,11 @@ void updateTrafficLight(int state) {
 				HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, GPIO_PIN_RESET);
 				HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, GPIO_PIN_RESET);
 				break;
+			case BLINK_YELLOW_RED:
+				clearLED();
+				HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(LED_YELLOW1_GPIO_Port, LED_YELLOW1_Pin, GPIO_PIN_RESET);
+				break;
 			case BLINK_GREEN_RED:
 				clearLED();
 				HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, GPIO_PIN_RESET);
@@ -206,48 +211,53 @@ void clear7SEG(){
 void displayBlinkTrafficLight(int state){
 	switch (state){
 		case BLINK_RED_GREEN:
-			if (t_blink == 0){
-//				setTimer(5,500);
-				t_blink = 500;
+//			if (t_blink <= 0){
+////				setTimer(5,500);
+//				t_blink = 500;
 				updateTrafficLight(BLINK_RED_GREEN);
-			}
+//			}
 			break;
 		case BLINK_RED_YELLOW:
-			if (t_blink == 0){
-//				setTimer(5,200);
-				t_blink = 200;
+//			if (t_blink <= 0){
+//				t_blink = 200;
 				updateTrafficLight(BLINK_RED_YELLOW);
-			}
+//			}
+			break;
+		case BLINK_YELLOW_RED:
+//			if (t_blink <= 0){
+//				t_blink = 200;
+				updateTrafficLight(BLINK_YELLOW_RED);
+//			}
 			break;
 		case INIT:
-			if (t_blink == 0){
+			if (t_blink <= 0){
 //				setTimer(5,25);
 				t_blink = 25;
 				updateTrafficLight(INIT);
 			}
 			break;
 		case BLINK_GREEN_RED:
-			if (t_blink == 0){
-				t_blink = 500;
+//			if (t_blink <= 0){
+//				t_blink = 500;
 				updateTrafficLight(BLINK_GREEN_RED);
-			}
+//			}
 			break;
 		case BLINK_RED:
-			if (t_blink == 0){
+			if (t_blink <= 0){
 //				setTimer(5,50);
 				t_blink = 50;
 				updateTrafficLight(BLINK_RED);
 			}
 			break;
 		case BLINK_GREEN:
-			if (t_blink == 0){
+			if (t_blink <= 0){
 //				setTimer(5,50);
 				t_blink = 50;
 				updateTrafficLight(BLINK_GREEN);
 			}
 			break;
 		case BLINK_YELLOW:
-			if (t_blink == 0){
+			if (t_blink <= 0){
 //				setTimer(5,50;
 				t_blink = 50;
 				updateTrafficLight(BLINK_YELLOW);

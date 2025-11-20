@@ -94,14 +94,14 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
+  SCH_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  SCH_Init();
-  SCH_Add_Task(blinkLED, 0, 50);
-  SCH_Add_Task(getKeyInput, 0, 1);
   SCH_Add_Task(timeCounter, 0, 1);
+  SCH_Add_Task(getKeyInput, 0, 1);
+  SCH_Add_Task(blinkLED, 0 ,50);
   SCH_Add_Task(fsm_run, 0, 1);
 
   while (1)

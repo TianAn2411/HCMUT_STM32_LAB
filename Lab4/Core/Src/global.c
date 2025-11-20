@@ -38,5 +38,5 @@ int button_long_flag[MAX_BUTTON];
 int t_road1 = 0;
 int t_road2 = 0;
 int t_scan_led = 0;
-int t_1s = 0;
+int t_1s = 100;
 int t_blink = 0;

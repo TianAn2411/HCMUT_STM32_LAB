@@ -34,6 +34,7 @@ extern int mode;
 #define BLINK_RED_GREEN		24
 #define BLINK_RED_YELLOW	25
 #define BLINK_GREEN_RED 	26
+#define BLINK_YELLOW_RED	27
 extern int manual_blink_mode;
 
 //config
